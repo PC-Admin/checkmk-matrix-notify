@@ -20,7 +20,7 @@ import ssl
 
 #################################################################
 # Configure Matrix Connection here:
-MATRIXHOST = ''
+MATRIXHOST = ''     # Eg: 'https://matrix-client.matrix.org' note don't put a '/' at the end!
 MATRIXTOKEN = ''
 #################################################################
 # Room id is set by Checkmk notification rule parameter
@@ -145,6 +145,14 @@ def send_matrix_message(text):
         headers=matrixHeaders,
         method='PUT'
     )
+
+    # Output the equivalent curl command and JSON payload for debugging
+    #curl_headers = ' '.join(
+    #    ['-H "{0}: {1}"'.format(k, v) for k, v in matrixHeaders.items()])
+    #curl_command = 'curl -X PUT {0} \'{1}\' -d \"{2}\"'.format(
+    #print("Equivalent curl command:\n", curl_command)
+    #print("JSON payload:\n", json.dumps(matrixDataDict, indent=2))
+
     try:
         response = urllib.request.urlopen(req, context=sslverify)
     except urllib.error.URLError as e:
